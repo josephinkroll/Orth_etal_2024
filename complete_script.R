@@ -33,7 +33,7 @@ library(terra)
 library(sf)
 
 #Load .RData file
-load("Rdata/nat_wat_pers/compl_scriptv08.RData")
+load("path/to/your/storage/compl_scriptv08.RData")
 
 
 ############################
@@ -56,8 +56,7 @@ lat <- lat[360:1]
 lon <- ncvar_get(ncin, "lon")
 
 LAI_80<-LAI_80[,360:1,]
-plot(LAI_80[380,200,])
-image.plot(LAI_80[,,25], main="daily LAI")
+
 
 LAI_90<-array(NaN, c(720,360,360)) #this array is also needed for filtering the vegetation data
 count<-1
@@ -68,8 +67,7 @@ for(year in 1992:2001){
   print(paste("Year", year, "is done", sep='')) #says which year is computed
 }
 LAI_90<-LAI_90[,360:1,]
-plot(LAI_90[380,200,], type="l")
-image.plot(LAI_90[,,13], main="daily LAI")
+
 
 LAI_00<-array(NaN, c(720,360,360)) #this array is also needed for filtering the vegetation data
 count<-1
@@ -80,8 +78,7 @@ for(year in 2002:2011){
   print(paste("Year", year, "is done", sep='')) #says which year is computed
 }
 LAI_00<-LAI_00[,360:1,]
-plot(LAI_00[380,200,], type="l")
-image.plot(LAI_00[,,13], main="daily LAI")
+
 
 LAI_10 <- array(NaN, c(720, 360, 324)) #this array is also needed for filtering the vegetation data
 count <- 1
@@ -92,8 +89,7 @@ for(year in 2012:2020){
   print(paste("Year", year, "is done", sep = '')) #says which year is computed
 }
 LAI_10<-LAI_10[, 360:1, ]
-plot(LAI_10[380, 200,], type = "l")
-image.plot(LAI_10[, , 13], main = "daily LAI")
+
 
 LAI_am_80 <- array(NaN, c(720, 360, 10))
 count <- 1
@@ -115,7 +111,6 @@ for(x in 1:720){
   }
 }
 
-image.plot(LAI_am_80[,,10])
 rm(LAI_80)
 
 #Creating the study area based on mean decadal LAI > 0.5 in all decades
@@ -158,7 +153,7 @@ for(x in 1:720){
     }
   }
 }
-image.plot(LAI_am_90[,,10])
+
 rm(LAI_90)
 
 LAI_am_00 <- array(NaN, c(720,360,10))
@@ -180,7 +175,7 @@ for(x in 1:720){
     }
   }
 }
-image.plot(LAI_am_00[,,10])
+
 rm(LAI_00)
 
 LAI_am_10 <- array(NaN, c(720,360,9))
@@ -202,7 +197,7 @@ for(x in 1:720){
     }
   }
 }
-image.plot(LAI_am_10[,,9])
+
 rm(LAI_10)
 
 mLAI80 <- array(NaN, c(720,360))
@@ -214,7 +209,7 @@ for(x in 1:720){
   }
 }
 
-image.plot(mLAI80[,])
+
 
 mLAI90 <- array(NaN, c(720,360))
 for(x in 1:720){
@@ -423,7 +418,6 @@ for(x in 1:720){
   }
 }
 
-image.plot(mMSWEP10[,])
 
 mMSWEP90 <- array(NaN, c(720,360))
 for(x in 1:720){
@@ -494,7 +488,7 @@ for(x in 1:720){
   }
 }
 
-png("Figures/nat_wat_pers/figures_v08/land_mask_gleam.png", width=7.5, height=4, units="in", res=1400)
+png("path/to/your/storage/land_mask_gleam.png", width=7.5, height=4, units="in", res=1400)
 par(mar=c(2,2,1,1))
 image.plot(lon, lat, total_land_mask[,])
 maps::map("world", add = T, interior = F)
@@ -743,7 +737,6 @@ for(x in 1:720){
   }
 }
 
-image.plot(mrGLEAM80[,])
 
 mrGLEAM90 <- array(NaN, c(720,360))
 for(x in 1:720){
@@ -793,8 +786,6 @@ for(year in 1982:1991){
 }
 
 VPD_80 <- VPD_80[,360:1,]
-plot(VPD_80[380,200,], type="l")
-image.plot(VPD_80[,,11], main="daily VPD")
 
 y_ERA5vpd_80 <- array(NaN, c(720,360,length(y_80_idx)))
 for(x in 1:720){
@@ -808,7 +799,7 @@ for(x in 1:720){
   print(x)
 }
 
-plot(y_ERA5vpd_80[382,282,], type="l")
+
 rm(VPD_80)
 
 VPD_90<-array(NaN, c(720,360,length(y_90))) #this array is also needed for filtering the vegetation data
@@ -1001,7 +992,6 @@ for(x in 1:720){
   }
 }
 
-plot(y_snr_80[382,282,], type="l")
 rm(ERA5_snr_80)
 
 ERA5_str_90<-array(NaN, c(720,360,length(y_90))) 
@@ -1617,8 +1607,6 @@ for(x in 1:720){
   print(x)
 }
 
-image.plot(sign_LAI0595_80[,], breaks = c(0, 1.1, 2.1, 2.4), col = c("green4", "lightgreen", "grey"))
-
 
 sign_LAI0595_00 <- array(NaN, c(720, 360)) 
 for(x in 1:720){
@@ -1638,7 +1626,6 @@ for(x in 1:720){
   print(x)
 }
 
-image.plot(sign_LAI0595_00[,])
 
 #derive direction of trend for the 1st and 2nd period
 trend_LAI_80 <- array(NaN, c(720,360))
@@ -2419,7 +2406,7 @@ for(x in 1:720){
   }
   print(x)
 }
-image.plot(valid_indices_1st[,])
+
 
 valid_indices_2nd <- array(NaN,c(720,360))
 for(x in 1:720){
@@ -2430,7 +2417,7 @@ for(x in 1:720){
   }
   print(x)
 }
-image.plot(valid_indices_2nd[,])
+
 
 
 #The following part uses parallel computation
@@ -2518,7 +2505,6 @@ AI_rndm_1st_ar_nonsel[which(AI_rndm_1st_ar_nonsel > 10)] <- NaN
 AI_rndm_2nd_ar[which(AI_rndm_2nd_ar > 10)] <- NaN
 AI_rndm_2nd_ar_nonsel[which(AI_rndm_2nd_ar_nonsel > 10)] <- NaN
 
-image.plot(AI_rndm_1st_ar[,,1], breaks=c(0, 0.5, 1, 2, 4, 8, 10), col=c("forestgreen", "olivedrab3", "khaki3", "burlywood3", "burlywood4", "tan4"))
 
 #Derive the trend direction
 AI_trend_1st <- AI_rndm_1st_ar_nonsel - AI_rndm_1st_ar
@@ -3365,7 +3351,7 @@ dev.off()
 ##############################################
 ####### Analysis 2: Regression analysis ######
 
-load("Rdata/nat_wat_pers/v08_regressionanalysis_plots.RData")
+load("path/to/your/storage/v08_regressionanalysis_plots.RData")
 
 #Normalize the hydro-met data that goes in there
 norm_y_LAI_8201 <- array(NaN, c(720, 360, 20))
